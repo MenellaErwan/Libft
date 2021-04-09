@@ -88,12 +88,10 @@ char			**ft_split(char const *s, char c)
 {
 	char	**result;
 	int		len;
-	int		i;
 
 	if (s == NULL)
 		return (NULL);
 	len = numstring((char*)s, c);
-	i = 0;
 	result = malloc(sizeof(char*) * len + 1);
 	if (result == NULL)
 		return (NULL);

@@ -32,10 +32,8 @@ static int	ft_len(long int n)
 
 static int	ft_power(long int nb, long int power)
 {
-	long int i;
 	long int result;
 
-	i = 0;
 	result = nb;
 	if (power < 0)
 		return (0);
