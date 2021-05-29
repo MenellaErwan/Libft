@@ -21,12 +21,12 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	i = 0;
 	if (dest == NULL && src == NULL)
 		return (NULL);
-	strsrc = (unsigned char*)src;
-	strdest = (unsigned char*)dest;
+	strsrc = (unsigned char *)src;
+	strdest = (unsigned char *)dest;
 	while (i < n)
 	{
 		strdest[i] = strsrc[i];
 		i++;
 	}
-	return ((void*)dest);
+	return ((void *)dest);
 }

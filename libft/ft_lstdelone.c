@@ -14,5 +14,5 @@
 
 void	ft_lstdelone(t_list *lst, void (*del)(void*))
 {
-	del((void*)lst);
+	del((void *)lst);
 }

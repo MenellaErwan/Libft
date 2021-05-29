@@ -15,25 +15,23 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# define BUFFER_SIZE 64
+# include "../libft/libft.h"
+# define BUFFER_SIZE 10000
 
-typedef struct		s_list
+typedef struct s_gnl
 {
 	char			*content;
-	struct s_list	*next;
+	struct s_gnl	*next;
 	int				fd;
-}					t_list;
+}					t_gnl;
 
 int					get_next_line(int fd, char **line);
-char				*ft_strjoin(char *s1, char *s2);
-char				*ft_strchr(const char *s, int c);
-char				*ft_strdup(const char *s);
-void				ft_lstadd_back(t_list **alst, int fd);
-t_list				*ft_lstnew(int fd);
-t_list				*ft_lstchr(int fd, t_list **alst);
-t_list				*ft_lstprec(t_list *lst);
-int					ft_buffer_to_line(t_list *current,
-char **line, t_list **alst);
-void				ft_lstfree(t_list *lst, t_list **alst);
-int					ft_strlen(char *s);
+char				*ft_strjoin_free(char *s1, char *s2);
+void				ft_gnladd_back(t_gnl **alst, int fd);
+t_gnl				*ft_gnlnew(int fd);
+t_gnl				*ft_gnlchr(int fd, t_gnl **alst);
+t_gnl				*ft_gnlprec(t_gnl *lst);
+int					ft_buffer_to_line(t_gnl *current,
+						char **line, t_gnl **alst);
+void				ft_gnlfree(t_gnl *lst, t_gnl **alst);
 #endif

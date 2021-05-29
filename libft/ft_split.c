@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-static int		numstring(char const *s1, char c)
+static int	numstring(char const *s1, char c)
 {
 	int	comp;
 	int	cles;
@@ -35,7 +35,7 @@ static int		numstring(char const *s1, char c)
 	return (comp);
 }
 
-static int		numchar(char const *s2, char c, int i)
+static int	numchar(char const *s2, char c, int i)
 {
 	int	lenght;
 
@@ -48,7 +48,7 @@ static int		numchar(char const *s2, char c, int i)
 	return (lenght);
 }
 
-static char		**freee(char const **dst, int j)
+static char	**freee(char const **dst, int j)
 {
 	while (j > 0)
 	{
@@ -59,7 +59,7 @@ static char		**freee(char const **dst, int j)
 	return (NULL);
 }
 
-static char		**fillup(char const *s, char **dst, char c, int l)
+static char	**fillup(char const *s, char **dst, char c, int l)
 {
 	int	i;
 	int	j;
@@ -80,19 +80,19 @@ static char		**fillup(char const *s, char **dst, char c, int l)
 		dst[j][k] = '\0';
 		j++;
 	}
-	dst[j] = 0;
+	dst[j] = "";
 	return (dst);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**result;
 	int		len;
 
 	if (s == NULL)
 		return (NULL);
-	len = numstring((char*)s, c);
-	result = malloc(sizeof(char*) * len + 1);
+	len = numstring((char *)s, c);
+	result = malloc(sizeof(char *) * (len + 1));
 	if (result == NULL)
 		return (NULL);
 	return (fillup(s, result, c, len));

@@ -24,7 +24,7 @@ char	*ft_strrchr(const char *s, int c)
 	while (i < length + 1)
 	{
 		if (c == s[i])
-			result = (char*)&s[i];
+			result = (char *)&s[i];
 		i++;
 	}
 	return (result);

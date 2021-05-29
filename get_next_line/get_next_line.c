@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int		ft_buffer_to_line(t_list *current, char **line, t_list **alst)
+int	ft_buffer_to_line(t_gnl *current, char **line, t_gnl **alst)
 {
 	int		i;
 	int		j;
@@ -30,19 +30,20 @@ int		ft_buffer_to_line(t_list *current, char **line, t_list **alst)
 			current->content[i++] = '\0';
 		*line = ft_strdup(current->content);
 		free(current->content);
-		if (!(current->content = ft_strdup(&tmp[j])))
+		current->content = ft_strdup(&tmp[j]);
+		if (!current->content)
 			return (-1);
 		free(tmp);
 		return (1);
 	}
 	*line = ft_strdup(current->content);
-	ft_lstfree(current, alst);
+	ft_gnlfree(current, alst);
 	return (0);
 }
 
-void	ft_lstfree(t_list *lst, t_list **alst)
+void	ft_gnlfree(t_gnl *lst, t_gnl **alst)
 {
-	t_list	*tmp;
+	t_gnl	*tmp;
 
 	tmp = *alst;
 	while (tmp && tmp != lst)
@@ -59,9 +60,9 @@ void	ft_lstfree(t_list *lst, t_list **alst)
 	lst = NULL;
 }
 
-t_list	*ft_lstchr(int fd, t_list **alst)
+t_gnl	*ft_gnlchr(int fd, t_gnl **alst)
 {
-	t_list *tmp;
+	t_gnl	*tmp;
 
 	tmp = *alst;
 	while (tmp)
@@ -73,7 +74,7 @@ t_list	*ft_lstchr(int fd, t_list **alst)
 	return (NULL);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
 	int		lens1;
 	int		lens2;
@@ -85,7 +86,8 @@ char	*ft_strjoin(char *s1, char *s2)
 		return (NULL);
 	lens1 = ft_strlen(s1);
 	lens2 = ft_strlen(s2);
-	if (!(result = malloc(sizeof(char) * (lens1 + lens2 + 1))))
+	result = malloc(sizeof(char) * (lens1 + lens2 + 1));
+	if (!result)
 		return (NULL);
 	i = -1;
 	j = 0;
@@ -98,28 +100,29 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (result);
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	char			buffer[BUFFER_SIZE + 1];
-	static t_list	*alst;
-	t_list			*current;
+	static t_gnl	*alst;
+	t_gnl			*current;
 	int				readed;
 
-	readed = 0;
+	readed = 1;
 	if (!line || BUFFER_SIZE < 1 || read(fd, buffer, 0) < 0)
 		return (-1);
-	if (!alst && !(alst = ft_lstnew(fd)))
-		return (-1);
-	if (!(current = ft_lstchr(fd, &alst)))
+	if (!alst)
+		alst = ft_gnlnew(fd);
+	current = ft_gnlchr(fd, &alst);
+	if (!current)
 	{
-		ft_lstadd_back(&alst, fd);
-		current = ft_lstchr(fd, &alst);
+		ft_gnladd_back(&alst, fd);
+		current = ft_gnlchr(fd, &alst);
 	}
-	while (!ft_strchr(current->content, '\n') && (readed = read(current->fd,
-	buffer, BUFFER_SIZE)) > 0)
+	while (!ft_strchr(current->content, '\n') && readed > 0)
 	{
+		readed = read(current->fd, buffer, BUFFER_SIZE);
 		buffer[readed] = '\0';
-		current->content = ft_strjoin(current->content, buffer);
+		current->content = ft_strjoin_free(current->content, buffer);
 	}
 	return (ft_buffer_to_line(current, line, &alst));
 }

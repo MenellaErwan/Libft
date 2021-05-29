@@ -14,7 +14,7 @@
 
 static int	ft_isset(char c, char *set)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (set[i])
@@ -26,7 +26,7 @@ static int	ft_isset(char c, char *set)
 	return (0);
 }
 
-char		*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	int		start;
 	int		end;
@@ -36,11 +36,11 @@ char		*ft_strtrim(char const *s1, char const *set)
 	i = 0;
 	if (s1 == NULL || set == NULL)
 		return (NULL);
-	while (ft_isset(s1[i], (char*)set) && s1[i])
+	while (ft_isset(s1[i], (char *)set) && s1[i])
 		i++;
 	start = i;
 	i = ft_strlen(s1);
-	while (ft_isset(s1[i - 1], (char*)set) && start < i)
+	while (ft_isset(s1[i - 1], (char *)set) && start < i)
 		i--;
 	end = i;
 	if (start > end)
@@ -48,6 +48,6 @@ char		*ft_strtrim(char const *s1, char const *set)
 	result = malloc(sizeof(char) * end - start + 1);
 	if (result == NULL)
 		return (NULL);
-	ft_bzero((void*)result, end - start + 1);
+	ft_bzero((void *)result, end - start + 1);
 	return (ft_memcpy(result, s1 + start, end - start));
 }

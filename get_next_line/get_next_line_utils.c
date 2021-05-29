@@ -12,75 +12,29 @@
 
 #include "get_next_line.h"
 
-int		ft_strlen(char *s)
+t_gnl	*ft_gnlnew(int fd)
 {
-	int i;
+	t_gnl	*gnl;
 
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	int		len;
-	char	*result;
-	int		i;
-
-	i = 0;
-	len = 0;
-	while (s[len])
-		len++;
-	result = malloc(sizeof(char) * len + 1);
-	if (result == NULL)
+	gnl = malloc(sizeof(t_gnl));
+	if (!gnl)
 		return (NULL);
-	while (i < len)
-	{
-		result[i] = s[i];
-		i++;
-	}
-	result[len] = '\0';
-	return (result);
+	gnl->content = ft_strdup("");
+	gnl->fd = fd;
+	gnl->next = NULL;
+	return (gnl);
 }
 
-t_list	*ft_lstnew(int fd)
+void	ft_gnladd_back(t_gnl **alst, int fd)
 {
-	t_list	*list;
-
-	if (!(list = malloc(sizeof(t_list))))
-		return (NULL);
-	list->content = ft_strdup("");
-	list->fd = fd;
-	list->next = NULL;
-	return (list);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	if (!s)
-		return (NULL);
-	while (*s != c)
-	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
-	}
-	return ((char *)s);
-}
-
-void	ft_lstadd_back(t_list **alst, int fd)
-{
-	t_list *lstlast;
+	t_gnl	*lstlast;
 
 	lstlast = *alst;
 	if (lstlast)
 		while (lstlast->next != NULL)
 			lstlast = lstlast->next;
 	if (lstlast == NULL)
-		*alst = ft_lstnew(fd);
+		*alst = ft_gnlnew(fd);
 	else
-		lstlast->next = ft_lstnew(fd);
+		lstlast->next = ft_gnlnew(fd);
 }

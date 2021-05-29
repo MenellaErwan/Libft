@@ -29,12 +29,12 @@ void	signjump(int *i, const char *nptr, int *minuscount)
 	}
 }
 
-int		ft_atoi(const char *nptr)
+int	ft_atoi(const char *nptr)
 {
-	int i;
-	int j;
-	int minuscount;
-	int result;
+	int	i;
+	int	j;
+	int	minuscount;
+	int	result;
 
 	i = 0;
 	minuscount = 0;
